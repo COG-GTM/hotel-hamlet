@@ -39,6 +39,7 @@ builder:
   args:
     APP_URL: https://hotel-hamlet.stg.iadw.in
     PHP_VERSION: 8.2
+    PHP_IMAGE_VERSION: v5.0.3
     NODE_VERSION: 18
     DB_CONNECTION: sqlite
     DB_DATABASE: /data/sqlite.db
