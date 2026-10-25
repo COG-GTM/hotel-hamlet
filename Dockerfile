@@ -1,10 +1,17 @@
-ARG PHP_VERSION
+# PHP runtime: pinned to a serversideup/php release that ships a PHP build
+# patched for PHP2Shell (CVE-2026-109618 / CVE-2026-109619).
+# 8.2-fpm-nginx-v5.0.3 = PHP 8.2.35, Debian 13 (trixie),
+# digest sha256:5f4e78ea633681f33ece37a61ac0aba92f6d4d4bef5a37f2a76cc12824e3bbd9
+ARG PHP_VERSION=8.2
+ARG PHP_IMAGE_VERSION=v5.0.3
 ARG NODE_VERSION
 ARG DB_CONNECTION
 ARG DB_DATABASE
 
 # Base Image
-FROM ghcr.io/serversideup/php:${PHP_VERSION}-fpm-nginx AS base
+FROM ghcr.io/serversideup/php:${PHP_VERSION}-fpm-nginx-${PHP_IMAGE_VERSION} AS base
+# Mitigation (not the fix): keep session.upload_progress off, as recommended by the PHP team.
+ENV PHP_SESSION_UPLOAD_PROGRESS_ENABLED=0
 ENV AUTORUN_ENABLED=1
 ENV AUTORUN_LARAVEL_MIGRATION=0
 ENV PHP_OPCACHE_ENABLE=1
